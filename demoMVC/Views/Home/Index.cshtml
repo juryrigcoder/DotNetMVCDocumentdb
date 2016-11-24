@@ -1,0 +1,38 @@
+﻿@model demoMVC.Models.HomeModel
+<div>
+    @foreach (var item in Model.Items)
+    {
+            <h2>
+              @Html.Raw(item.Title)
+            </h2>
+    }
+</div>
+
+<ul>
+	@if (Model.PaginationInformation.CurrentPage > 1)
+	{
+		<li>
+			<a href="~/@Model.PaginationInformation.Location/Index">First</a>
+		</li>
+		<li>
+			<a href="~/@Model.PaginationInformation.Location/Index?page=@(Model.PaginationInformation.CurrentPage - 1)">Previous</a>
+		</li>
+	}
+
+	@for (var page = Model.PaginationInformation.CurrentPage; page <= Model.PaginationInformation.TotalPages; page++)
+	{
+		<li>
+			<a href="~/@Model.PaginationInformation.Location/Index?page=@page">@page</a>
+		</li>
+	}
+
+	@if (Model.PaginationInformation.CurrentPage < Model.PaginationInformation.TotalPages)
+	{
+		<li>
+			<a href="~/@Model.PaginationInformation.Location/Index?page=@(Model.PaginationInformation.CurrentPage + 1)">Next</a>
+		</li>
+		<li>
+			<a href="~/@Model.PaginationInformation.Location/Index?page=@(Model.PaginationInformation.TotalPages)">Last</a>
+		</li>
+	}
+</ul>
