@@ -7,27 +7,37 @@ namespace demoMVC.Domain
 {
     public class Consumables
     {
+        // class method, consumables
+        /// <summary>
+        /// Returns a list of articles
+        /// </summary>
         public static IEnumerable<ArticleModel> ConsumableCollection()
         {
-            List<ArticleModel> ArticleList = new List<ArticleModel>();
-            using (var db = new LiteDatabase(DbConnection.DbLocation))
+            var articleList = new List<ArticleModel>();
+            var dbstr = new DbConnection();
+            using (var db = new LiteDatabase(dbstr.DbLocation))
             {
                 var collection = db.GetCollection<ArticleModel>("Articles");
                 var results = collection.FindAll();
-                ArticleList.AddRange(results);
+                articleList.AddRange(results);
             }
 
-            return ArticleList;
+            return articleList;
         }
 
+        // class method, consumables
+        /// <summary>
+        /// Inserts a list of articles into database
+        /// </summary>
         public static void ConsumablesInsert()
         {
-            using (var db = new LiteDatabase(DbConnection.DbLocation))
+            var dbstr = new DbConnection();
+            using (var db = new LiteDatabase(dbstr.DbLocation))
             {
                 var articles = db.GetCollection<ArticleModel>("Articles");
-                for (int advance = 1; advance < 20; advance++)
+                for (var advance = 1; advance < 20; advance++)
                 {
-                    articles.Insert(new ArticleModel(){ArticleId = advance, ArticleBody = "This is article " + advance, Title = "Title: " + advance, Created = DateTime.UtcNow});
+                    articles.Insert(new ArticleModel(_articleId:advance,_articleBody:"This is article " + advance, _title:"Title: " + advance,_created: DateTime.UtcNow));
                 }
             }
         }
