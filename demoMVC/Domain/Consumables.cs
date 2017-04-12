@@ -2,6 +2,7 @@
 using demoMVC.Models;
 using LiteDB;
 using System;
+using System.Linq;
 
 namespace demoMVC.Domain
 {
@@ -18,8 +19,7 @@ namespace demoMVC.Domain
             using (var db = new LiteDatabase(dbstr.DbLocation))
             {
                 var collection = db.GetCollection<ArticleModel>("Articles");
-                var results = collection.FindAll();
-                articleList.AddRange(results);
+                articleList.AddRange(collection.FindAll().Select(itm => new ArticleModel(_articleId: itm.ArticleId, _articleBody: itm.ArticleBody, _title: itm.Title, _created: itm.Created)));
             }
 
             return articleList;
@@ -37,7 +37,9 @@ namespace demoMVC.Domain
                 var articles = db.GetCollection<ArticleModel>("Articles");
                 for (var advance = 1; advance < 20; advance++)
                 {
-                    articles.Insert(new ArticleModel(_articleId:advance,_articleBody:"This is article " + advance, _title:"Title: " + advance,_created: DateTime.UtcNow));
+                    var ins = new ArticleModel(_articleId: advance, _articleBody: "This is article " + advance,
+                        _title: "Title: " + advance, _created: DateTime.UtcNow);
+                    articles.Insert(ins);
                 }
             }
         }

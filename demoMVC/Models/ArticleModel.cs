@@ -5,16 +5,19 @@ namespace demoMVC.Models
 {
 	public class ArticleModel
 	{
-	    [BsonIndex]
-	    public int ArticleId { get; private set; }
+	    [BsonIndex]//litedb attribute to mark your entity property to auto create index when queried
+	    public int ArticleId { get; set; }// unique id
 
-		public string Title { get; private set; }
+		public string Title { get; set; }// article title
 
-		public string ArticleBody { get; private set; }
+		public string ArticleBody { get; set; }// document or article content
 
-	    [BsonIndex]
-	    public DateTime Created  { get; private set; }
+	    [BsonIndex]//litedb attribute to mark your entity property to auto create index when queried
+	    public DateTime Created  { get; set; }// date creted
 
+	    /*
+         * class constructors: first requires all fields to be set. included blank constructor for model binding
+         */
 	    public ArticleModel(int _articleId, string _title, string _articleBody, DateTime _created)
 	    {
 	        ArticleId = _articleId;

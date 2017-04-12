@@ -2,9 +2,10 @@
 <div>
     @foreach (var item in Model.Items)
     {
-            <h2>
-              @Html.Raw(item.Title)
-            </h2>
+        <h2>
+            @item.Title
+        </h2>
+        <p>@item.ArticleBody</p>
     }
 </div>
 

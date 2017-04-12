@@ -9,7 +9,7 @@ namespace demoMVC.Controllers
 	{
 		public ActionResult Index(int? page)
 		{
-			var pageItems = Consumables.ConsumableCollection().OrderByDescending(c => c.Created);
+		    var pageItems = Consumables.ConsumableCollection().OrderByDescending(c => c.Created);
 		    var articleModels = pageItems as IList<Models.ArticleModel> ?? pageItems.ToList();
 		    var pager = new Pagination("Home", articleModels.Count, page);
 		    var items = articleModels.Skip((int)((pager.CurrentPage - 1) * pager.PageSize)).Take((int)pager.PageSize);
